@@ -47,8 +47,8 @@ namespace ImageEditor
 
                 string folder = fbd.SelectedPath;
 
-                // Kaydedilecek klasör: seçilen klasör\Kirpilmis
-                outputFolder = Path.Combine(folder, "Kirpilmis");
+                // Kaydedilecek klasör: seçilen klasör\Cropped
+                outputFolder = Path.Combine(folder, "Cropped");
 
                 if (!Directory.Exists(outputFolder))
                     Directory.CreateDirectory(outputFolder);
