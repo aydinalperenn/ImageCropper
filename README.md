@@ -1,4 +1,5 @@
-#Image Editor – Batch Image Cropper (WinForms)
+# Image Editor – Batch Image Cropper (WinForms)
+
 
 This project is a Windows Forms–based desktop application that allows users to load images from a folder sequentially and crop them interactively using mouse drag operations. While selecting the crop area, the application provides a real-time preview of the resulting image resolution.
 
