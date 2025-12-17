@@ -68,7 +68,7 @@ namespace ImageEditor
 
                 if (imagePaths.Count == 0)
                 {
-                    MessageBox.Show("Bu klasörde .jpg/.jpeg/.png/.bmp bulunamadı!");
+                    MessageBox.Show("No .jpg/.jpeg/.png/.bmp files were found in this folder!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -84,27 +84,28 @@ namespace ImageEditor
 
         private void btnSaveNext_Click(object sender, EventArgs e)
         {
-            Cut();
-
-            LoadNextImage();
+            if (Cut())
+            {
+                LoadNextImage();
+            }
         }
 
-        private void Cut()
+        private bool Cut()
         {
             if (originalBitmap == null)
-                return;
+                return false;
 
             if (selectionRect.Width < 5 || selectionRect.Height < 5)
             {
-                MessageBox.Show("Önce kırpma alanı seçmelisin.");
-                return;
+                MessageBox.Show("You must select a cropping area first.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
             }
 
             Rectangle cropRect = TranslateSelectionToImageRect(pictureBox1, originalBitmap, selectionRect);
             if (cropRect == Rectangle.Empty)
             {
-                MessageBox.Show("Seçim geçersiz (görüntü alanının dışında olabilir).");
-                return;
+                MessageBox.Show("Invalid selection (it may be outside the image area).", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
             }
 
             Bitmap cropped = null;
@@ -119,6 +120,7 @@ namespace ImageEditor
                 string outPath = GetUniqueCropPath(srcPath);
 
                 cropped.Save(outPath);
+                return true;
 
             }
             finally
@@ -167,7 +169,7 @@ namespace ImageEditor
 
             pictureBox1.Invalidate();
 
-            lblCropSize.Text = "Yeni Boyut: -";
+            lblCropSize.Text = "New Size: -";
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
@@ -227,7 +229,7 @@ namespace ImageEditor
                     {
                         lastCropW = cropRect.Width;
                         lastCropH = cropRect.Height;
-                        lblCropSize.Text = "Yeni Boyut: " + lastCropW + " x " + lastCropH + " px";
+                        lblCropSize.Text = "New Size: " + lastCropW + " x " + lastCropH + " px";
                     }
                 }
                 else
@@ -236,7 +238,7 @@ namespace ImageEditor
                     {
                         lastCropW = -1;
                         lastCropH = -1;
-                        lblCropSize.Text = "Yeni Boyut: -";
+                        lblCropSize.Text = "New Size: -";
                     }
                 }
             }
@@ -319,12 +321,14 @@ namespace ImageEditor
 
         private void btnCut_Click(object sender, EventArgs e)
         {
-            Cut();
-
-            // Yeni seçim için kutuyu temizle (istersen)
-            selectionRect = Rectangle.Empty;
-            lblCropSize.Text = "Yeni Boyut: -";
-            pictureBox1.Invalidate();
+            if (Cut())
+            {
+                // Yeni seçim için kutuyu temizle
+                selectionRect = Rectangle.Empty;
+                lblCropSize.Text = "New Size: -";
+                pictureBox1.Invalidate();
+            }
+            
         }
 
         private string GetUniqueCropPath(string srcPath)
