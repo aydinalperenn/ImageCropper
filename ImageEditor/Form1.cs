@@ -23,6 +23,8 @@ namespace ImageEditor
         private Point startPoint;
         private Rectangle selectionRect = Rectangle.Empty;
 
+        private int cutCounterForCurrentImage = 0;
+
         private DateTime lastUiUpdate = DateTime.MinValue;
         private const int UiUpdateIntervalMs = 16; // ~60 FPS (33 yaparsan ~30 FPS)
         private int lastCropW = -1;
@@ -82,6 +84,13 @@ namespace ImageEditor
 
         private void btnSaveNext_Click(object sender, EventArgs e)
         {
+            Cut();
+
+            LoadNextImage();
+        }
+
+        private void Cut()
+        {
             if (originalBitmap == null)
                 return;
 
@@ -107,20 +116,21 @@ namespace ImageEditor
                 string name = Path.GetFileNameWithoutExtension(srcPath);
                 string ext = Path.GetExtension(srcPath);
 
-                string outPath = Path.Combine(outputFolder, name + "_Kirpilmis" + ext);
+                string outPath = GetUniqueCropPath(srcPath);
 
                 cropped.Save(outPath);
+
             }
             finally
             {
                 if (cropped != null) cropped.Dispose();
             }
-
-            LoadNextImage();
         }
 
         private void LoadNextImage()
         {
+            cutCounterForCurrentImage = 0;
+
             selectionRect = Rectangle.Empty;
             isSelecting = false;
 
@@ -305,6 +315,44 @@ namespace ImageEditor
                 originalBitmap = null;
             }
             Application.Exit();
+        }
+
+        private void btnCut_Click(object sender, EventArgs e)
+        {
+            Cut();
+
+            // Yeni seçim için kutuyu temizle (istersen)
+            selectionRect = Rectangle.Empty;
+            lblCropSize.Text = "Yeni Boyut: -";
+            pictureBox1.Invalidate();
+        }
+
+        private string GetUniqueCropPath(string srcPath)
+        {
+            string name = Path.GetFileNameWithoutExtension(srcPath);
+            string ext = Path.GetExtension(srcPath);
+
+            // İlk kırpım: name_Cropped.png
+            // Sonrakiler: name_Cropped_2.png, _3...
+            cutCounterForCurrentImage++;
+
+            string fileName;
+            if (cutCounterForCurrentImage == 1)
+                fileName = name + "_Cropped" + ext;
+            else
+                fileName = name + "_Cropped_" + cutCounterForCurrentImage.ToString() + ext;
+
+            string outPath = Path.Combine(outputFolder, fileName);
+
+            // Ek güvenlik: dosya zaten varsa, bir sonraki numarayı bul
+            while (File.Exists(outPath))
+            {
+                cutCounterForCurrentImage++;
+                fileName = name + "_Cropped_" + cutCounterForCurrentImage.ToString() + ext;
+                outPath = Path.Combine(outputFolder, fileName);
+            }
+
+            return outPath;
         }
 
     }

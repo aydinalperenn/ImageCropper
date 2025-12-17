@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmImageEditor));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnCut = new System.Windows.Forms.Button();
             this.lblCropSize = new System.Windows.Forms.Label();
             this.btnSaveNext = new System.Windows.Forms.Button();
             this.btnSkip = new System.Windows.Forms.Button();
@@ -43,6 +44,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.DarkGray;
+            this.panel1.Controls.Add(this.btnCut);
             this.panel1.Controls.Add(this.lblCropSize);
             this.panel1.Controls.Add(this.btnSaveNext);
             this.panel1.Controls.Add(this.btnSkip);
@@ -54,15 +56,28 @@
             this.panel1.Size = new System.Drawing.Size(1264, 94);
             this.panel1.TabIndex = 1;
             // 
+            // btnCut
+            // 
+            this.btnCut.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCut.BackColor = System.Drawing.Color.LightSeaGreen;
+            this.btnCut.Font = new System.Drawing.Font("Corbel", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnCut.Location = new System.Drawing.Point(752, 20);
+            this.btnCut.Name = "btnCut";
+            this.btnCut.Size = new System.Drawing.Size(152, 58);
+            this.btnCut.TabIndex = 5;
+            this.btnCut.Text = "Cut";
+            this.btnCut.UseVisualStyleBackColor = false;
+            this.btnCut.Click += new System.EventHandler(this.btnCut_Click);
+            // 
             // lblCropSize
             // 
             this.lblCropSize.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblCropSize.Font = new System.Drawing.Font("Corbel", 15.75F);
-            this.lblCropSize.Location = new System.Drawing.Point(204, 16);
+            this.lblCropSize.Location = new System.Drawing.Point(176, 16);
             this.lblCropSize.Name = "lblCropSize";
-            this.lblCropSize.Size = new System.Drawing.Size(658, 30);
+            this.lblCropSize.Size = new System.Drawing.Size(560, 30);
             this.lblCropSize.TabIndex = 4;
             this.lblCropSize.Text = "Yeni Boyut: -";
             this.lblCropSize.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -72,11 +87,11 @@
             this.btnSaveNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSaveNext.BackColor = System.Drawing.Color.LightGreen;
             this.btnSaveNext.Font = new System.Drawing.Font("Corbel", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnSaveNext.Location = new System.Drawing.Point(1074, 20);
+            this.btnSaveNext.Location = new System.Drawing.Point(1100, 20);
             this.btnSaveNext.Name = "btnSaveNext";
             this.btnSaveNext.Size = new System.Drawing.Size(152, 58);
             this.btnSaveNext.TabIndex = 3;
-            this.btnSaveNext.Text = "Save";
+            this.btnSaveNext.Text = "Cut && Next";
             this.btnSaveNext.UseVisualStyleBackColor = false;
             this.btnSaveNext.Click += new System.EventHandler(this.btnSaveNext_Click);
             // 
@@ -85,11 +100,11 @@
             this.btnSkip.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSkip.BackColor = System.Drawing.Color.IndianRed;
             this.btnSkip.Font = new System.Drawing.Font("Corbel", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnSkip.Location = new System.Drawing.Point(887, 20);
+            this.btnSkip.Location = new System.Drawing.Point(927, 20);
             this.btnSkip.Name = "btnSkip";
             this.btnSkip.Size = new System.Drawing.Size(152, 58);
             this.btnSkip.TabIndex = 2;
-            this.btnSkip.Text = "Skip";
+            this.btnSkip.Text = "Next";
             this.btnSkip.UseVisualStyleBackColor = false;
             this.btnSkip.Click += new System.EventHandler(this.btnSkip_Click);
             // 
@@ -99,9 +114,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblStatus.Font = new System.Drawing.Font("Corbel", 15.75F);
-            this.lblStatus.Location = new System.Drawing.Point(199, 55);
+            this.lblStatus.Location = new System.Drawing.Point(170, 55);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(663, 30);
+            this.lblStatus.Size = new System.Drawing.Size(566, 30);
             this.lblStatus.TabIndex = 1;
             this.lblStatus.Text = "Image x/x";
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -111,7 +126,7 @@
             this.btnFolder.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnFolder.BackColor = System.Drawing.Color.LightBlue;
             this.btnFolder.Font = new System.Drawing.Font("Corbel", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnFolder.Location = new System.Drawing.Point(36, 18);
+            this.btnFolder.Location = new System.Drawing.Point(12, 20);
             this.btnFolder.Name = "btnFolder";
             this.btnFolder.Size = new System.Drawing.Size(152, 58);
             this.btnFolder.TabIndex = 0;
@@ -163,6 +178,7 @@
         private System.Windows.Forms.Button btnSaveNext;
         private System.Windows.Forms.Button btnSkip;
         private System.Windows.Forms.Label lblCropSize;
+        private System.Windows.Forms.Button btnCut;
     }
 }
 
